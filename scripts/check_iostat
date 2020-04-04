@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Version 0.0.2 - Jan/2009
 # Changes: added device verification
@@ -30,12 +30,12 @@ bc=`which bc 2>/dev/null`
 
 help () {
 /bin/echo -e "\n\tThis plugin shows the I/O usage of the specified disk, using the iostat external program.\n\tIt prints three statistics: Transactions per second (tps), Kilobytes per second\n\tread from the disk (KB_read/s) and and written to the disk (KB_written/s)\n\n$0:\n\t-d <disk>\t\tDevice to be checked (without the full path, eg. sda)\n\t-c <tps>,<read>,<wrtn>\tSets the CRITICAL level for tps, KB_read/s and KB_written/s, respectively\n\t-w <tps>,<read>,<wrtn>\tSets the WARNING level for tps, KB_read/s and KB_written/s, respectively\n"
-	exit -1
+	exit 3
 }
 
 # Ensuring we have the needed tools:
 ( [ ! -f $iostat ] || [ ! -f $bc ] ) && \
-	( echo "ERROR: You must have iostat and bc installed in order to run this plugin\n\tuse: apt-get install iostat bc\n" && exit -1 )
+	( echo "ERROR: You must have iostat and bc installed in order to run this plugin\n\tuse: apt-get install iostat bc\n" && exit 3 )
 
 # Getting parameters:
 while getopts "d:w:c:h" OPT; do
